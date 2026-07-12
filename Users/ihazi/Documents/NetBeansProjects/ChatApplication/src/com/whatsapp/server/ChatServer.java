@@ -27,25 +27,30 @@ public class ChatServer {
 
         public Handler(Socket socket) { this.socket = socket; }
 
-        public void run() {
-            try {
-                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                out = new PrintWriter(socket.getOutputStream(), true);
-                
-                synchronized (clientWriters) { clientWriters.add(out); }
+       public void run() {
+    try {
+        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        out = new PrintWriter(socket.getOutputStream(), true);
+        
+        synchronized (clientWriters) { clientWriters.add(out); }
 
-                String input;
-                while ((input = in.readLine()) != null) {
-                    for (PrintWriter writer : clientWriters) {
-                        writer.println(input); // Send encrypted msg to everyone
-                    }
-                }
-            } catch (IOException e) {
-                System.out.println("Error: " + e.getMessage());
-            } finally {
-                if (out != null) { clientWriters.remove(out); }
-                try { socket.close(); } catch (IOException e) {}
+        // --- DECLARE THE VARIABLE HERE ---
+        String input; 
+        
+        // Now the loop will work
+        while ((input = in.readLine()) != null) {
+            System.out.println("SERVER LOG (Encrypted): " + input); 
+            
+            for (PrintWriter writer : clientWriters) {
+                writer.println(input);
             }
         }
+    } catch (IOException e) {
+        System.out.println("Error: " + e.getMessage());
+    } finally {
+        if (out != null) { clientWriters.remove(out); }
+        try { socket.close(); } catch (IOException e) {}
     }
 }
+        }
+    }
