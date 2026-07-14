@@ -14,12 +14,21 @@ public class ChatClient extends javax.swing.JFrame {
     private String userName;
 
     public ChatClient() {
-        initComponents();
+    initComponents();
+    
+    // Simple Authentication Mechanism
+    String pass = JOptionPane.showInputDialog(this, "Enter Server Password:");
+    
+    if (pass != null && pass.equals("1234")) { // "1234" is the 'Verified' password
         userName = JOptionPane.showInputDialog(this, "Enter Name:");
         if (userName == null || userName.isEmpty()) userName = "User";
         this.setTitle("WhatsApp - " + userName);
         connectToServer();
+    } else {
+        JOptionPane.showMessageDialog(this, "Authentication Failed! Closing App.");
+        System.exit(0); // Closes the app if the password is wrong
     }
+}
 
     private void connectToServer() {
         try {
@@ -83,13 +92,13 @@ public class ChatClient extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(70, 70, 70)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(messageField, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(messageField, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(66, Short.MAX_VALUE))
+                        .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
